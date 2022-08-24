@@ -1,0 +1,54 @@
+<ng-template appPlaceholder></ng-template>
+<div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+        <!-- <div class="alert alert-danger" *ngIf="errorMsg">
+            <p>{{errorMsg}}</p>
+        </div> -->
+        <app-alert [message]="errorMsg" *ngIf="errorMsg" (close)="onHandleError()"  ></app-alert>
+        <div *ngIf="isLoading" style="text-align: center;">
+            <app-loading-spinner></app-loading-spinner>
+        </div>
+        <form #authForm="ngForm" (ngSubmit)="onSubmit(authForm)" *ngIf="!isLoading">
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input 
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    required
+                    email
+                    ngModel
+                    >
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    id="password"
+                    name="password"
+                    ngModel
+                    minlength="8"
+                    required>
+            </div>
+            <div class="form-group" *ngIf="!isLoginMode">
+                <label for="confirmPassword">Confirm Password</label>
+                <input 
+                    type="password" 
+                    class="form-control" 
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    ngModel
+                    required>
+            </div>
+            <div class="alert alert-danger" *ngIf="!isLoginMode && authForm.valid && authForm.value.password !== authForm.value.confirmPassword">
+                Password not match
+            </div>
+            <div>
+                <button class="btn btn-success" type="submit" [disabled]="!authForm.valid" >{{ isLoginMode? 'LogIn' : 'Sign Up'}}</button> |
+                <button class="btn btn-success" type="button" (click)="onSwitchMode()"> Switch to {{ !isLoginMode? 'LogIn' : 'Sign Up'}}</button>
+            </div>
+        </form>
+    </div>
+</div>
